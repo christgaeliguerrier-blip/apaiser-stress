@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apaiser — respirer, se recentrer, avancer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Manrope:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0E2429;
+    --bg-soft: #133038;
+    --surface: #1A3D44;
+    --surface-hi: #22484F;
+    --line: #2B5158;
+    --text: #EAF2EF;
+    --text-muted: #9FBAB6;
+    --accent: #D9B382;
+    --accent-soft: #3A3226;
+    --sage: #8FB39D;
+    --font-display: 'Fraunces', serif;
+    --font-body: 'Manrope', sans-serif;
+    --font-mono: 'IBM Plex Mono', monospace;
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  body{
+    margin:0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a{ color: inherit; }
+  ::selection{ background: var(--accent); color: var(--bg); }
+
+  :focus-visible{
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  .wrap{
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  /* NAV */
+  nav{
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(14,36,41,0.85);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+  nav .wrap{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding-top: 18px;
+    padding-bottom: 18px;
+  }
+  .brand{
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+  }
+  .brand em{ font-style: italic; color: var(--accent); }
+  .nav-links{
+    display:flex;
+    gap: 28px;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    list-style: none;
+    margin:0; padding:0;
+  }
+  .nav-links a{ text-decoration:none; transition: color .2s; }
+  .nav-links a:hover{ color: var(--text); }
+  .nav-links{ display: none; }
+  @media (min-width: 720px){ .nav-links{ display:flex; } }
+
+  /* HERO */
+  .hero{
+    padding: 88px 0 96px;
+    text-align:center;
+  }
+  .eyebrow{
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--sage);
+    margin-bottom: 22px;
+  }
+  h1{
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(2.2rem, 5vw, 3.6rem);
+    line-height: 1.08;
+    margin: 0 0 20px;
+    letter-spacing: -0.01em;
+  }
+  h1 em{ font-style: italic; color: var(--accent); font-weight: 400; }
+  .hero p.lede{
+    max-width: 540px;
+    margin: 0 auto 56px;
+    color: var(--text-muted);
+    font-size: 1.05rem;
+  }
+
+  /* BREATHING SIGNATURE ELEMENT */
+  .breath-stage{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap: 28px;
+  }
+  .breath-ring-holder{
+    position:relative;
+    width: 260px;
+    height: 260px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .breath-ring-holder::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    border-radius:50%;
+    border: 1px solid var(--line);
+  }
+  .breath-circle{
+    width: 156px;
+    height: 156px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 34% 30%, var(--surface-hi), var(--surface) 70%);
+    border: 1px solid var(--accent);
+    box-shadow: 0 0 60px -12px rgba(217,179,130,0.35);
+    animation: breathe 19s ease-in-out infinite;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  @keyframes breathe{
+    0%   { transform: scale(0.6); }
+    21.1%{ transform: scale(1); }
+    57.9%{ transform: scale(1); }
+    100% { transform: scale(0.6); }
+  }
+  .breath-word{
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 1.15rem;
+    color: var(--text);
+  }
+  .breath-caption{
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    letter-spacing: 0.04em;
+  }
+  .breath-caption span{ color: var(--accent); }
+
+  @media (prefers-reduced-motion: reduce){
+    .breath-circle{ animation: none; transform: scale(0.85); }
+  }
+
+  /* SECTION SCAFFOLD */
+  section{ padding: 88px 0; border-top: 1px solid var(--line); }
+  .section-head{
+    display:flex;
+    flex-direction:column;
+    gap: 10px;
+    margin-bottom: 48px;
+    max-width: 620px;
+  }
+  .section-eyebrow{
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--sage);
+  }
+  h2{
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(1.6rem, 3vw, 2.15rem);
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+  .section-head p{ color: var(--text-muted); margin: 4px 0 0; }
+
+  /* SIGNALS */
+  .signals-grid{
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 40px;
+  }
+  .signal-col h3{
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    margin: 0 0 16px;
+  }
+  .signal-col ul{
+    list-style:none;
+    margin:0; padding:0;
+    display:flex;
+    flex-direction:column;
+    gap: 12px;
+  }
+  .signal-col li{
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    padding-left: 16px;
+    position: relative;
+  }
+  .signal-col li::before{
+    content:"";
+    position:absolute;
+    left:0; top: 9px;
+    width: 5px; height: 5px;
+    border-radius:50%;
+    background: var(--sage);
+  }
+
+  /* TECHNIQUES */
+  .tech-grid{
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+  }
+  .tech-card{
+    background: var(--bg-soft);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 28px 26px;
+    display:flex;
+    flex-direction:column;
+    gap: 14px;
+    transition: border-color .25s, transform .25s;
+  }
+  .tech-card:hover{ border-color: var(--accent); transform: translateY(-2px); }
+  .tech-time{
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--accent);
+    letter-spacing: 0.06em;
+  }
+  .tech-card h3{
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 1.2rem;
+    margin: 0;
+  }
+  .tech-card p{
+    color: var(--text-muted);
+    font-size: 0.92rem;
+    margin: 0;
+  }
+  .tech-steps{
+    margin: 4px 0 0;
+    padding-left: 18px;
+    color: var(--text-muted);
+    font-size: 0.88rem;
+    display:flex;
+    flex-direction:column;
+    gap: 6px;
+  }
+
+  /* DAILY RITUAL */
+  .ritual{
+    display:grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+  @media (min-width: 720px){ .ritual{ grid-template-columns: repeat(3, 1fr); } }
+  .ritual-cell{
+    padding: 30px 28px;
+    border-bottom: 1px solid var(--line);
+  }
+  @media (min-width: 720px){
+    .ritual-cell{ border-bottom: none; border-right: 1px solid var(--line); }
+    .ritual-cell:last-child{ border-right: none; }
+  }
+  .ritual-cell:last-child{ border-bottom: none; }
+  .ritual-cell .moment{
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--sage);
+    margin-bottom: 10px;
+    display:block;
+  }
+  .ritual-cell h3{
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 1.1rem;
+    margin: 0 0 10px;
+  }
+  .ritual-cell p{ color: var(--text-muted); font-size: 0.9rem; margin:0; }
+
+  /* FOOTER */
+  footer{
+    padding: 56px 0 64px;
+    border-top: 1px solid var(--line);
+  }
+  .footer-note{
+    background: var(--bg-soft);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 26px 28px;
+    color: var(--text-muted);
+    font-size: 0.92rem;
+    margin-bottom: 36px;
+  }
+  .footer-note strong{ color: var(--text); }
+  .footer-bottom{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <span class="brand">apais<em>er</em></span>
+    <ul class="nav-links">
+      <li><a href="#signaux">Signaux</a></li>
+      <li><a href="#techniques">Techniques</a></li>
+      <li><a href="#rituel">Rituel</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Un espace pour reprendre son souffle</div>
+    <h1>Le stress se calme<br><em>un souffle</em> à la fois.</h1>
+    <p class="lede">Pas de méthode miracle : des gestes simples, fondés et rapides à mettre en place, pour désamorcer la tension avant qu'elle ne s'installe.</p>
+
+    <div class="breath-stage">
+      <div class="breath-ring-holder">
+        <div class="breath-circle">
+          <span class="breath-word" id="breathWord">Inspirez</span>
+        </div>
+      </div>
+      <div class="breath-caption">Suivez le cercle — <span>4s</span> inspiration · <span>7s</span> rétention · <span>8s</span> expiration</div>
+    </div>
+  </div>
+</header>
+
+<section id="signaux">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-eyebrow">Se comprendre</span>
+      <h2>Reconnaître les signaux</h2>
+      <p>Le stress s'annonce souvent avant d'être conscient. Ces signes, pris isolément, ne veulent rien dire — c'est leur accumulation qui mérite attention.</p>
+    </div>
+    <div class="signals-grid">
+      <div class="signal-col">
+        <h3>Dans le corps</h3>
+        <ul>
+          <li>Mâchoires ou épaules serrées</li>
+          <li>Respiration courte, haute dans la poitrine</li>
+          <li>Fatigue qui ne passe pas avec le repos</li>
+          <li>Troubles du sommeil ou de l'appétit</li>
+        </ul>
+      </div>
+      <div class="signal-col">
+        <h3>Dans les émotions</h3>
+        <ul>
+          <li>Irritabilité qui surgit vite</li>
+          <li>Sentiment d'être submergé sans raison claire</li>
+          <li>Difficulté à ressentir de la satisfaction</li>
+          <li>Inquiétude qui tourne en boucle</li>
+        </ul>
+      </div>
+      <div class="signal-col">
+        <h3>Dans les comportements</h3>
+        <ul>
+          <li>Procrastination sur des tâches simples</li>
+          <li>Isolement progressif</li>
+          <li>Vérifications répétées (téléphone, messages)</li>
+          <li>Perte de concentration en cours de tâche</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="techniques">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-eyebrow">Passer à l'action</span>
+      <h2>Quatre techniques express</h2>
+      <p>Chacune tient dans une pause de quelques minutes. Choisissez celle qui correspond à l'instant présent.</p>
+    </div>
+    <div class="tech-grid">
+      <div class="tech-card">
+        <span class="tech-time">≈ 2 minutes</span>
+        <h3>Respiration 4-7-8</h3>
+        <p>Calme le système nerveux en ralentissant physiquement le rythme cardiaque.</p>
+        <ol class="tech-steps">
+          <li>Inspirez par le nez, 4 secondes</li>
+          <li>Retenez l'air, 7 secondes</li>
+          <li>Expirez par la bouche, 8 secondes</li>
+          <li>Répétez 4 cycles</li>
+        </ol>
+      </div>
+      <div class="tech-card">
+        <span class="tech-time">≈ 3 minutes</span>
+        <h3>Ancrage 5-4-3-2-1</h3>
+        <p>Ramène l'attention au présent en mobilisant les cinq sens.</p>
+        <ol class="tech-steps">
+          <li>5 choses que vous voyez</li>
+          <li>4 choses que vous touchez</li>
+          <li>3 choses que vous entendez</li>
+          <li>2 choses que vous sentez, 1 que vous goûtez</li>
+        </ol>
+      </div>
+      <div class="tech-card">
+        <span class="tech-time">≈ 5 minutes</span>
+        <h3>Scan corporel</h3>
+        <p>Repère les tensions physiques accumulées sans jugement.</p>
+        <ol class="tech-steps">
+          <li>Fermez les yeux, assis ou allongé</li>
+          <li>Parcourez le corps des pieds à la tête</li>
+          <li>Relâchez chaque zone tendue au passage</li>
+        </ol>
+      </div>
+      <div class="tech-card">
+        <span class="tech-time">≈ 4 minutes</span>
+        <h3>Marche consciente</h3>
+        <p>Décharge la tension physique tout en changeant le décor mental.</p>
+        <ol class="tech-steps">
+          <li>Marchez à un rythme naturel, sans but</li>
+          <li>Portez attention au contact du pied au sol</li>
+          <li>Laissez les pensées passer sans les retenir</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="rituel">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-eyebrow">Sur la durée</span>
+      <h2>Un rituel simple, trois moments du jour</h2>
+      <p>La régularité compte plus que l'intensité. Trois points d'ancrage suffisent à changer une journée.</p>
+    </div>
+    <div class="ritual">
+      <div class="ritual-cell">
+        <span class="moment">Le matin</span>
+        <h3>Avant l'écran</h3>
+        <p>Deux minutes de respiration avant de consulter téléphone ou messages, pour démarrer la journée sur son propre rythme.</p>
+      </div>
+      <div class="ritual-cell">
+        <span class="moment">En journée</span>
+        <h3>Une pause déclarée</h3>
+        <p>Une coupure de cinq minutes, loin de l'écran, à heure fixe — même sans en ressentir le besoin.</p>
+      </div>
+      <div class="ritual-cell">
+        <span class="moment">Le soir</span>
+        <h3>Fermer la journée</h3>
+        <p>Noter une chose accomplie et une chose à laisser de côté, pour ne pas emporter la journée dans la nuit.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-note">
+      <strong>Ce site propose des outils généraux de gestion du stress</strong>, pas un accompagnement médical. Si le stress s'installe durablement ou devient difficile à porter seul, en parler à un professionnel de santé reste la meilleure étape suivante.
+    </div>
+    <div class="footer-bottom">
+      <span>apaiser — respirer, se recentrer, avancer</span>
+      <span>Fait pour être lu lentement.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const word = document.getElementById('breathWord');
+  const phases = [
+    { label: 'Inspirez', duration: 4000 },
+    { label: 'Retenez',  duration: 7000 },
+    { label: 'Expirez',  duration: 8000 }
+  ];
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function runCycle(i){
+    word.textContent = phases[i].label;
+    setTimeout(() => runCycle((i + 1) % phases.length), phases[i].duration);
+  }
+  if(!reduceMotion){ runCycle(0); }
+</script>
+
+</body>
+</html>
